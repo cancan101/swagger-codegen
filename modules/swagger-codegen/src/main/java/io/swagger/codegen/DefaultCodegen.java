@@ -462,7 +462,11 @@ public class DefaultCodegen {
             datatype = "number";
         } else if (p instanceof RefProperty) {
             RefProperty r = (RefProperty) p;
-            datatype = r.get$ref();
+            try {
+                datatype = r.get$ref();
+            } catch(NullPointerException ex) {
+                return "string";
+            }
             if (datatype.indexOf("#/definitions/") == 0) {
                 datatype = datatype.substring("#/definitions/".length());
             }

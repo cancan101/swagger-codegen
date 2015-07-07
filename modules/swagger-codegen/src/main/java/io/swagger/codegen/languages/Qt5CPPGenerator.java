@@ -273,7 +273,11 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
         // else
         if (p instanceof RefProperty) {
             RefProperty rp = (RefProperty) p;
-            return "new " + toModelName(rp.getSimpleRef()) + "()";
+            try {
+                return "new " + toModelName(rp.getSimpleRef()) + "()";
+            } catch(NullPointerException ex) {
+                return "new QString(\"\")";
+            }
         }
         return "NULL";
     }
